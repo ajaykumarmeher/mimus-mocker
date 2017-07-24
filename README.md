@@ -28,7 +28,7 @@ $ npm install
 # In Node.js!
 
 ```
-let mimusMocker = require(mimus-mocker);
+let mimusMocker = require('mimus-mocker');
 
 
 
@@ -52,7 +52,7 @@ let mocks = {
 
 function api1Validator(req,res, callback) {
     // check additional request like
-    let queryParams =request.query;
+    let queryParams =req.query;
     
     if(queryParams.test1 === true){
         // override the default response as per your requirement.

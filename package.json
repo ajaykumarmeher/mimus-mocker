@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/ajaykumarmeher/mimus-mocker/issues"
   },
-  "homepage": "https://github.com/ajaykumarmeher/mimus-mocker#readme"
+  "homepage": "https://github.com/ajaykumarmeher/mimus-mocker#readme",
+  "dependencies": {
+    "url-matcher": "^0.2.2"
+  }
 }
