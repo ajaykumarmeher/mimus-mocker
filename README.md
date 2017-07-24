@@ -15,8 +15,7 @@ or
 Install via git clone
 
 ```bash
-$ git clone https://github.com/ajaykumarmeher/MimusMocker.git
-$ cd mimus-mocker
+$ git clone https://github.com/ajaykumarmeher/mimus-mocker.git
 $ npm install
 ```
   
@@ -52,7 +51,7 @@ let mocks = {
 
 // additional validator is useful for adding custom validations before returning the default responseData. You can also override the default response based on request data for same url.
 
-function authValidator(req,res, callback) {
+function api1Validator(req,res, callback) {
     // check additional request like
     let queryParams =request.query;
     
