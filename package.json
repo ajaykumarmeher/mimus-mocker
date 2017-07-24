@@ -1,6 +1,6 @@
 {
   "name": "mimus-mocker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "MimusMocker is a unified API mocking middleware which can be used for providing API mocks quickly i.e even before writing a single line of actual api into your [Routers](https://expressjs.com/en/guide/routing.html).",
   "main": "index.js",
   "scripts": {
