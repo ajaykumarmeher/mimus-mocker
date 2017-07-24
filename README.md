@@ -30,8 +30,7 @@ $ npm install
 ```
 let mimusMocker = require(mimus-mocker);
 
-// must register before registering any specific routers.
-app.use(mimusMocker(mocks));
+
 
 let mocks = {
     "mocks": [{
@@ -68,6 +67,9 @@ function api1Validator(req,res, callback) {
         return callback(false, null);
     }
 }
+
+// must register before registering any specific routers.
+app.use(mimusMocker(mocks));
 ```
 
 ## How to define the mock configuration?
