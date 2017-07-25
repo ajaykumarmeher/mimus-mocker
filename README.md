@@ -27,49 +27,44 @@ $ npm install
 
 # In Node.js!
 
-```
-let mimusMocker = require('mimus-mocker');
+```js
+const mimusMocker = require('mimus-mocker');
 
-
-
-let mocks = {
-    "mocks": [{
-        "url": "/api/v1/testapp/api1",
-        "method":"GET",
-        "responseData": require('path/to/your/mock/file/for/api1.json'),
-        "additionalValidator":api1Validator /*optional*/,
-        "isEligible": true 
-    },{
-        "url": "/api/v1/testapp/settings",
-        "method":"PUT",
-        "responseData": require('path/to/your/mock/file/for/settings.json'),
-        "isEligible": false
-    }],
-    "isEligible": process.env.NODE_ENV === undefined || process.env.NODE_ENV === "staging"
+const mocks = {
+  'mocks': [{
+    'url': '/user/:id',
+    'method': 'GET',
+    'responseData': userMockResponse,
+    'isEligible': true 
+  }, {
+    'url': '/posts/:id',
+    'method': 'GET',
+    'responseData': postMockResponse,
+    'additionalValidator': customValidator /* optional */,
+    'isEligible': true
+  }],
+  'isEligible': process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'staging'
 };
 
-// additional validator is useful for adding custom validations before returning the default responseData. You can also override the default response based on request data for same url.
-
-function api1Validator(req,res, callback) {
-    // check additional request like
-    let queryParams =req.query;
-    
-    if(queryParams.test1 === true){
-        // override the default response as per your requirement.
-        // let customResponseData = require('your/conditional/based/mock/response.json');
-        // you can also use the above.
-        res.status(200).json({
-                    message: 'custom response.'
-                });
-                
-        return callback(true/*overide*/,res);
-    }else{
-        return callback(false, null);
-    }
+function customValidator (req, res, next) {
+  if (req.params.id) {
+    res.status(200).json(postV2MockResponse);
+    return next(true, res);
+  }
+  return next(false, null);
 }
 
-// must register before registering any specific routers.
-app.use(mimusMocker(mocks));
+const app = require('express')();
+const mimusMocker = require('../lib')(mocks);
+
+app.get('/user/:id', mimusMocker, function (req, res) {
+  res.status(200).json({ name: 'tobi' });
+});
+
+app.get('/posts/:id', mimusMocker, function (req, res) {
+  res.status(200).json({ title: 'some-post' });
+});
+
 ```
 
 ## How to define the mock configuration?
