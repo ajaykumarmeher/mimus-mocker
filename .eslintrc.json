@@ -1,0 +1,61 @@
+{
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "globals":{
+    // project globals here ...
+  },
+  "rules": {
+    "no-console": "warn",
+    "eol-last": ["error", "always"],
+    "no-inline-comments": "off",
+    "indent": ["error", 2],
+    "quotes": ["error", "single"],
+    "no-mixed-spaces-and-tabs": "error",
+    "comma-dangle": ["error", "never"],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "key-spacing": ["error", {
+      "mode": "strict",
+      "beforeColon": false,
+      "afterColon": true
+    }],
+    "space-infix-ops": "error",
+    "no-else-return": "error",
+    "no-whitespace-before-property": "error",
+    "keyword-spacing": ["error", {
+      "before": true
+    }],
+    "space-in-parens": ["error", "never"],
+    "space-before-function-paren": ["error", {
+      "anonymous": "always",
+      "named": "always",
+      "asyncArrow": "always"
+    }],
+    "space-before-blocks": ["error", {
+        "functions": "always",
+        "classes": "always"
+      }
+    ],
+    "spaced-comment": ["error", "always", {
+      "line": {
+        "markers": ["/"],
+        "exceptions": ["-", "+"]
+      },
+      "block": {
+        "markers": ["!"],
+        "exceptions": ["*"],
+        "balanced": true
+      }
+    }],
+    "brace-style": ["error", "1tbs", {
+      "allowSingleLine": true
+    }],
+    "max-nested-callbacks": ["error", 3]
+  }
+}
