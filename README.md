@@ -28,8 +28,6 @@ $ npm install
 # In Node.js!
 
 ```js
-const mimusMocker = require('mimus-mocker');
-
 const mocks = {
   'mocks': [{
     'url': '/user/:id',
@@ -55,7 +53,7 @@ function customValidator (req, res, next) {
 }
 
 const app = require('express')();
-const mimusMocker = require('../lib')(mocks);
+const mimusMocker = require('mimus-mocker')(mocks);
 
 app.get('/user/:id', mimusMocker, function (req, res) {
   res.status(200).json({ name: 'tobi' });
@@ -64,7 +62,6 @@ app.get('/user/:id', mimusMocker, function (req, res) {
 app.get('/posts/:id', mimusMocker, function (req, res) {
   res.status(200).json({ title: 'some-post' });
 });
-
 ```
 
 ## How to define the mock configuration?
