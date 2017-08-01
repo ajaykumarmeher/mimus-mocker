@@ -1,5 +1,4 @@
 const request = require('supertest');
-const express = require('express');
 
 const userMockResponse = require('./mock/user-data.json');
 const postMockResponse = require('./mock/user-posts.json');
@@ -10,7 +9,7 @@ const mocks = {
     'url': '/user/:id',
     'method': 'GET',
     'responseData': userMockResponse,
-    'isEligible': true 
+    'isEligible': true
   }, {
     'url': '/posts/:id',
     'method': 'GET',
@@ -29,31 +28,82 @@ function customValidator (req, res, next) {
   return next(false, null);
 }
 
-const mimusMocker = require('../lib')(mocks);
-const app = express();
-app.get('/user/:id', mimusMocker, function (req, res) {
-  res.status(200).json({ name: 'tobi' });
-});
-app.get('/posts/:id', mimusMocker, function (req, res) {
-  res.status(200).json({ title: 'some-post' });
-});
 
-describe('GET /user/:id', function () {
-  it('respond with mock json', function (done) {
-    request(app)
-      .get('/user/10')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(userMockResponse, done);
+
+describe('Using Router', function() {
+  let express = require('express');
+  let app = express();
+
+  before(function() {
+    const mimusMocker = require('../lib')(mocks);
+
+    app.get('/user/:id', mimusMocker, function (req, res) {
+      res.status(200).json({ name: 'tobi' });
+    });
+    app.get('/posts/:id', mimusMocker, function (req, res) {
+      res.status(200).json({ title: 'some-post' });
+    });
+  });
+
+  after(function() {
+    // runs before all tests in this block
+    express = null;
+    app = null;
+  });
+
+  describe('GET /user/:id', function () {
+    it('should respond with mock json', function (done) {
+      request(app)
+        .get('/user/10')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(userMockResponse, done);
+    });
+  });
+
+  describe('GET /posts/:id', function () {
+    it('should respond with additionalValidator json', function (done) {
+      request(app)
+        .get('/posts/12')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(postV2MockResponse, done);
+    });
   });
 });
 
-describe('GET /posts/:id', function () {
-  it('respond with additionalValidator json', function (done) {
-    request(app)
-      .get('/posts/12')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(postV2MockResponse, done);
+describe('Using as middleware', function() {
+  let express = require('express');
+  let app = express();
+
+  before(function() {
+    const mimusMocker = require('../lib')(mocks);
+    app.use(mimusMocker);
+  });
+
+  after(function() {
+    // runs before all tests in this block
+    express = null;
+    app = null;
+  });
+
+  describe('GET /user/:id', function () {
+    it('should respond with mock json', function (done) {
+      request(app)
+        .get('/user/10')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(userMockResponse, done);
+    });
+  });
+
+  describe('GET /posts/:id', function () {
+    it('should respond with additionalValidator json', function (done) {
+      request(app)
+        .get('/posts/12')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(postV2MockResponse, done);
+    });
   });
 });

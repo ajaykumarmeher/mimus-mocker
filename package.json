@@ -25,9 +25,11 @@
   },
   "homepage": "https://github.com/ajaykumarmeher/mimus-mocker#readme",
   "dependencies": {
+    "url-matcher": "^0.2.2"
+  },
+  "devDependencies": {
     "express": "^4.15.3",
     "mocha": "^3.4.2",
-    "supertest": "^3.0.0",
-    "url-matcher": "^0.2.2"
+    "supertest": "^3.0.0"
   }
 }
